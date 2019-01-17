@@ -1,4 +1,4 @@
-package ru.inno.lec02HomeWork;
+package ru.inno.lec02HomeWork.Sorters;
 
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public class Helper {
      * @param max максимальная граница рандомного значения (включительная)
      * @throws Exception @see getRandInt()
      */
-    static void fillRandomArray(Integer[] arr, int min, int max)
+    public static void fillRandomArray(Integer[] arr, int min, int max)
             throws Exception {
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = getRandInt(min, max);
@@ -33,7 +33,7 @@ public class Helper {
      * @param arr ссылка на массив, который нужно проверить
      * @return true - отсортирован, false - не отсортирован
      */
-    static boolean isSorted(Integer[] arr) {
+    public static boolean isSorted(Integer[] arr) {
         for (int i = 0; i < arr.length - 1; ++i) {
             if (arr[i] > arr[i + 1]) {
                 return false;
@@ -51,7 +51,7 @@ public class Helper {
      * @return рандомное целое число в пределах [min; max]
      * @throws Exception генерируется при условии min больше или равно max
      */
-    static int getRandInt(int min, int max) throws Exception {
+    public static int getRandInt(int min, int max) throws Exception {
         if (min >= max) {
             throw new Exception("Некорректно заданы границы диапазона "
                     + "случайного числа");

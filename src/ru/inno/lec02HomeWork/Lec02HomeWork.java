@@ -5,6 +5,10 @@
 
 package ru.inno.lec02HomeWork;
 
+import ru.inno.lec02HomeWork.Sorters.BogoSort;
+import ru.inno.lec02HomeWork.Sorters.Helper;
+import ru.inno.lec02HomeWork.Sorters.MergeSort;
+
 import java.util.Arrays;
 
 /**

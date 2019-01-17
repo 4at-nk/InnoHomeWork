@@ -1,4 +1,4 @@
-package ru.inno.lec02HomeWork;
+package ru.inno.lec02HomeWork.Sorters;
 
 import java.util.Arrays;
 
