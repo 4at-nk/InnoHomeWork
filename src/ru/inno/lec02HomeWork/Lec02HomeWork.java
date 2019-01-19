@@ -5,8 +5,8 @@
 
 package ru.inno.lec02HomeWork;
 
+import ru.inno.lec02HomeWork.Sorters.ArrayHelper;
 import ru.inno.lec02HomeWork.Sorters.BogoSort;
-import ru.inno.lec02HomeWork.Sorters.Helper;
 import ru.inno.lec02HomeWork.Sorters.MergeSort;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.Arrays;
  * Класс демонстрирующий работу методов сортировки BogoSort и MergeSort
  *
  * @author FOAT
- * @version 1.0  16.01.2019
+ * @version 1.0  19.01.2019
  */
 public class Lec02HomeWork {
 
@@ -26,12 +26,12 @@ public class Lec02HomeWork {
      */
     final static int ARR_SIZE = 10;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Integer[] arr = new Integer[ARR_SIZE];
         Integer[] arr2;
 
         try {
-            Helper.fillRandomArray(arr, -100, 100);
+            ArrayHelper.fillRandomArray(arr, -100, 100);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,12 +41,8 @@ public class Lec02HomeWork {
         System.out.println("исходный массив:");
         System.out.println(Arrays.toString(arr));
 
-        try {
-            BogoSort.sort(arr);
-            MergeSort.sort(arr2);
-        } catch (NullPointerException e) {
-            System.out.println("массив не заполнен или заполнен не до конца!");
-        }
+        BogoSort.sort(arr);
+        MergeSort.sort(arr2);
 
         System.out.println();
         printResult("BogoSort", arr);
@@ -61,7 +57,7 @@ public class Lec02HomeWork {
      */
     private static void printResult(String method, Integer[] arr) {
         System.out.println(method + ":");
-        if (!Helper.isSorted(arr)) {
+        if (!ArrayHelper.isSorted(arr)) {
             System.out.println("не работает!");
         } else {
             System.out.println(Arrays.toString(arr));

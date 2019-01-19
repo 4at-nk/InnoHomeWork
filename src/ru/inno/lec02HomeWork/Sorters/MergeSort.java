@@ -4,7 +4,7 @@ package ru.inno.lec02HomeWork.Sorters;
  * Класс реализующий сортировку массива Integer методом MergeSort
  *
  * @author FOAT
- * @version 1.0  16.01.2019
+ * @version 1.0  19.01.2019
  */
 public class MergeSort {
 
@@ -39,7 +39,7 @@ public class MergeSort {
      */
     public static void sort(Integer[] arr) {
         if (arr == null) {
-            return;
+            throw new NullPointerException("Массив неинициализирован");
         }
 
         if (arr.length <= 1) {

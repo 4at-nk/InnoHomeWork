@@ -1,5 +1,7 @@
 package ru.inno.lec02HomeWork.Sorters;
 
+import ru.inno.RangedRandom;
+
 import java.util.Arrays;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Arrays;
  * окажется отсортированным
  *
  * @author FOAT
- * @version 1.0  16.01.2019
+ * @version 1.0  19.01.2019
  */
 public class BogoSort {
 
@@ -26,8 +28,9 @@ public class BogoSort {
             int pos = 0;
             try {
                 //выбираем наугад любой элемент, точнее номер элемента
-                pos = Helper.getRandInt(0, tempArr.length - 1);
-            } catch (Exception e) { //если метод гарантированно не сгенерирует Exception, можно ли делать так?
+                pos = RangedRandom.getRandInt(0, tempArr.length - 1);
+            } catch (Exception e) { //если метод гарантированно не сгенерирует Exception, можно ли оставлять пустой catch?
+                e.printStackTrace();
             }
             //кладём его в конечный массив
             arr[curPos++] = tempArr[pos];
@@ -55,11 +58,11 @@ public class BogoSort {
      */
     public static void sort(Integer[] arr) {
         if (arr == null) {
-            return;
+            throw new NullPointerException("Массив неинициализирован");
         }
 
         //тасуем, пока не отсортируется
-        while (!Helper.isSorted(arr)) {
+        while (!ArrayHelper.isSorted(arr)) {
             shuffle(arr);
         }
     }
