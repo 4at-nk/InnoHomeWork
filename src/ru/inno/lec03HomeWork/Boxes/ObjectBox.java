@@ -1,14 +1,12 @@
 package ru.inno.lec03HomeWork.Boxes;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Абстрактный класс для хранения коллекции Object'ов
  *
  * @author FOAT
- * @version 1.0  18.01.2019
+ * @version 1.0  20.01.2019
  */
 abstract public class ObjectBox {
     /*
@@ -17,6 +15,9 @@ abstract public class ObjectBox {
      * более строгие к параметрам, функции
      * добавления и удаления
      * */
+
+    /** Уникальный идентификатор объекта */
+    private UUID id = UUID.randomUUID();
 
     /**
      * Хранимая коллекция
@@ -87,7 +88,7 @@ abstract public class ObjectBox {
      * @return строка элеметов коллекции
      */
     public String dump() {
-        return toString();
+        return collection.toString();
     }
 
     @Override
@@ -95,16 +96,19 @@ abstract public class ObjectBox {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ObjectBox objectBox = (ObjectBox) o;
-        return Objects.equals(collection, objectBox.collection);
+        return Objects.equals(id, objectBox.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(collection);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return collection.toString();
+        return "ObjectBox{" +
+                "id=" + id +
+                ", collection=" + collection +
+                '}';
     }
 }

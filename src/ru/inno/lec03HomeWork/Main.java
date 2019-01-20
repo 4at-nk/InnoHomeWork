@@ -31,9 +31,9 @@ public class Main {
         MathBox<Double> mbDouble = new MathBox<>(dArr);
         MathBox<Float> mbFloat = new MathBox<>(fArr);
 
-        System.out.println("Содержимое mbInteger: " + mbInteger);
-        System.out.println("Содержимое mbDouble: " + mbDouble);
-        System.out.println("Содержимое mbFloat: " + mbFloat);
+        System.out.println("Содержимое mbInteger: " + mbInteger.dump());
+        System.out.println("Содержимое mbDouble: " + mbDouble.dump());
+        System.out.println("Содержимое mbFloat: " + mbFloat.dump());
         System.out.println();
 
         System.out.println("Сумма элементов mbInteger: " + mbInteger.summator());
@@ -60,11 +60,11 @@ public class Main {
         mbFloat.remove((float) TO_REMOVE_2);
         System.out.println("Удаляем из коллекций значения 3 и 10.");
         System.out.println("Элементы mbInteger после удаления элементов: "
-                + mbInteger);
+                + mbInteger.dump());
         System.out.println("Элементы mbDouble после удаления элементов: "
-                + mbDouble);
+                + mbDouble.dump());
         System.out.println("Элементы mbFloat после удаления элементов: "
-                + mbFloat);
+                + mbFloat.dump());
         System.out.println();
 
         final int TO_ADD_1 = 42;
@@ -77,10 +77,10 @@ public class Main {
         mbFloat.add((float) TO_ADD_2);
         System.out.println("Добавляем в коллекции значения 0 и 42.");
         System.out.println("Элементы mbInteger после добавления элементов: "
-                + mbInteger);
+                + mbInteger.dump());
         System.out.println("Элементы mbDouble после добавления элементов: "
-                + mbDouble);
+                + mbDouble.dump());
         System.out.println("Элементы mbFloat после добавления элементов: "
-                + mbFloat);
+                + mbFloat.dump());
     }
 }
