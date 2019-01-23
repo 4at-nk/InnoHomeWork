@@ -1,0 +1,37 @@
+{
+"class" : "ru.inno.lec06HomeWork.Entities.Man",
+"ru.inno.lec06HomeWork.Entities.Man$Sex%sex" : "sMale",
+"name" : "Homer",
+"age" : "40",
+"weight" : "100.0",
+"skills" : [
+	"swim",
+	"draw",
+	"biology"
+],
+"pet" : 
+{
+"class" : "ru.inno.lec06HomeWork.Entities.Pet",
+"name" : "barsik",
+"age" : "3",
+"toy" : 
+{
+"class" : "ru.inno.lec06HomeWork.Entities.Toy",
+"name" : "bantik",
+"cost" : "5.0"
+}
+},
+"cash" : "300.0",
+"toy" : 
+{
+"class" : "ru.inno.lec06HomeWork.Entities.Toy",
+"name" : "ps4",
+"cost" : "500.0"
+},
+"cars" : [
+	"bmw",
+	"mercedez",
+	"porsche",
+	"ferrari"
+]
+}
