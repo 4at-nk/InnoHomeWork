@@ -1,7 +1,7 @@
 package ru.inno.lec05HomeWork.Occurences;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Поток для поиска строк, в которых встречается искомое слово, и
@@ -15,7 +15,7 @@ class WordFindThread extends Thread {
     /**
      * список предложений, которые нужно проверить
      */
-    private final ArrayList<String> sentences;
+    private final List<String> sentences;
     /**
      * слово, которое нужно найти
      */
@@ -32,7 +32,7 @@ class WordFindThread extends Thread {
      * @param word            слово, которое нужно найти
      * @param sentencesWriter объект для записи предложений в файл
      */
-    WordFindThread(ArrayList<String> sentences, String word, SentencesWriter sentencesWriter) {
+    WordFindThread(List<String> sentences, String word, SentencesWriter sentencesWriter) {
         this.sentences = sentences;
         this.word = word;
         this.sentencesWriter = sentencesWriter;
@@ -40,7 +40,7 @@ class WordFindThread extends Thread {
 
     @Override
     public void run() {
-        ArrayList<String> res = WordFinder.find(sentences, word);
+        List<String> res = WordFinder.find(sentences, word);
         for (String s : res) {
             try {
                 sentencesWriter.write(s);

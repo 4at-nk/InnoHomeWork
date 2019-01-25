@@ -1,6 +1,7 @@
 package ru.inno.lec05HomeWork.Occurences;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +20,7 @@ class WordFinder {
      * @param word      слово, которое нужно найти
      * @return список предложений, в которых встречается искомое слово
      */
-    static ArrayList<String> find(ArrayList<String> sentences, String word) {
+    static List<String> find(List<String> sentences, String word) {
         String w = word.substring(0, 1);
         String ord = word.substring(1);
         //маска для нахождения искомого слова
@@ -35,7 +36,7 @@ class WordFinder {
         Pattern pattern = Pattern.compile(mask);
         Matcher matcher;
 
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (String sentence : sentences) {
             matcher = pattern.matcher(sentence);
             if (matcher.find()) {
