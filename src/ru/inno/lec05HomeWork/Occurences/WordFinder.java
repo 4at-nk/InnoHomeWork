@@ -1,9 +1,9 @@
 package ru.inno.lec05HomeWork.Occurences;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Класс для поиска предложений, в которых встречается искомое слово
@@ -34,16 +34,13 @@ class WordFinder {
                         //оставшаяся часть слова и после неё должна быть не буква
                         + ord.toLowerCase() + "[^a-zа-яё]";
         Pattern pattern = Pattern.compile(mask);
-        Matcher matcher;
 
-        List<String> result = new ArrayList<>();
-        for (String sentence : sentences) {
-            matcher = pattern.matcher(sentence);
-            if (matcher.find()) {
-                result.add(sentence);
-            }
-        }
-
-        return result;
+        return sentences
+                .stream()
+                .filter(sentence -> {
+                    Matcher matcher = pattern.matcher(sentence);
+                    return matcher.find();
+                })
+                .collect(Collectors.toList());
     }
 }
