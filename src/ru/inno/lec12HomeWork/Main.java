@@ -1,9 +1,11 @@
 /*
  * Фоат Шарафутдинов
- * Домашняя работа двенадцатого занятия
+ * Домашняя работа двенадцатого и тринадцатого занятия
  */
 package ru.inno.lec12HomeWork;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.inno.lec12HomeWork.dao.*;
 import ru.inno.lec12HomeWork.entity.Person;
 import ru.inno.lec12HomeWork.entity.Subject;
@@ -65,6 +67,9 @@ import java.util.List;
  */
 public class Main {
 
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Main.class);
+
     private static final String DRIVER = "org.postgresql.Driver";
     private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String LOGIN = "postgres";
@@ -72,7 +77,13 @@ public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER);
+
+        LOGGER.info("Попытка подключения к БД: driver - {}, url - {}, login - {}, password - {}",
+                DRIVER, URL, LOGIN, PASSWORD);
+
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+
+            LOGGER.info("Успешное подключеник к БД");
 
             String[] persons = {
                     "John", "Max", "Kate", "Jane", "Tom", "Hank", "Homer", "Stephen",
@@ -157,6 +168,9 @@ public class Main {
             System.out.println("Отписываем от Art студента Homer");
             courseDAO.unlinkSubjectFromPersons(art, homer);
             showSubjectPersons(courseDAO, art);
+        } catch (SQLException e) {
+            LOGGER.error("Не удалось подключиться к БД");
+            throw e;
         }
     }
 
@@ -169,7 +183,7 @@ public class Main {
     private static void showPersonSubjects(CourseDAO courseDAO, Person person) throws SQLException {
         List<Subject> subjectsList = (List<Subject>) courseDAO.getSubjectsByPerson(person);
         System.out.println();
-        System.out.println("Предмкты студента " + person.getName() + ": ");
+        System.out.println("Предметы студента " + person.getName() + ": ");
         for (Subject subject : subjectsList) {
             System.out.println(subject);
         }
