@@ -8,7 +8,7 @@ import java.io.IOException;
  * Класс для записи записи предложений
  *
  * @author FOAT
- * @version 1.0  22.01.2019
+ * @version 1.0  05.02.2019
  */
 class SentencesWriter implements AutoCloseable {
 
@@ -28,12 +28,29 @@ class SentencesWriter implements AutoCloseable {
     }
 
     /**
+     * Конструктор для тестирования
+     *
+     * @param bufferedWriter мок для тестирования
+     */
+    SentencesWriter(BufferedWriter bufferedWriter) {
+        if (bufferedWriter == null) {
+            throw new NullPointerException();
+        }
+
+        this.bufferedWriter = bufferedWriter;
+    }
+
+    /**
      * Записывает предложение в файл
      *
      * @param sentence предложение, которое нужно записать
      * @throws IOException при проблемах при записи в файл
      */
     synchronized void write(String sentence) throws IOException {
+        if (sentence == null) {
+            throw new NullPointerException("На запись в файл подана null-строка");
+        }
+
         bufferedWriter.write(sentence + "\r\n");
     }
 

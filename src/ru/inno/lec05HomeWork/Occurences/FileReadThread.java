@@ -1,13 +1,12 @@
 package ru.inno.lec05HomeWork.Occurences;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Поток для поиска предложений из файла, в которых встречается искомое слово
  *
  * @author FOAT
- * @version 1.0  22.01.2019
+ * @version 1.0  05.02.2019
  */
 class FileReadThread extends Thread {
     /*
@@ -30,6 +29,10 @@ class FileReadThread extends Thread {
      * объект для записи предложений в файл
      */
     private final SentencesWriter sentencesWriter;
+    /**
+     * объект для запуска новых потоков
+     */
+    private ThreadLauncher threadLauncher = new ThreadLauncher();
 
     /**
      * Конструктор
@@ -44,17 +47,24 @@ class FileReadThread extends Thread {
         this.sentencesWriter = sentencesWriter;
     }
 
+    /**
+     * метод добавлен для тестов
+     *
+     * @param threadLauncher мок-объект
+     */
+    void setThreadLauncher(ThreadLauncher threadLauncher) {
+        this.threadLauncher = threadLauncher;
+    }
+
     @Override
     public void run() {
         //открываем файл для чтения порциями
         try (FileChunkGetter fileChunkGetter = new FileChunkGetter(fileName)) {
             StringBuilder chunkString = new StringBuilder();
-            List<Thread> threads = new ArrayList<>();
             //пока файл не закончился
             while (fileChunkGetter.getNextChunk(chunkString) != -1) {
                 //преобразуем текст в список предложений
                 List<String> sentences = SentencesSplitter.getSplittedText(chunkString.toString());
-
                 //для каждого слова запускаем поток поиска слова
                 //(если слов не больше, чем максимальное разрешенное количество потоков)
                 //в предложениях WordFindThread
@@ -63,15 +73,12 @@ class FileReadThread extends Thread {
                     int countToLaunch = Integer.min(MAX_THREAD_COUNT, words.length - curPos);
 
                     for (int i = 0; i < countToLaunch; ++i) {
-                        threads.add(new WordFindThread(sentences, words[curPos++], sentencesWriter));
-                        threads.get(i).start();
+                        threadLauncher.launch(
+                                new WordFindThread(sentences, words[curPos++], sentencesWriter));
                     }
 
-                    for (Thread thread : threads) {
-                        thread.join();
-                    }
-
-                    threads.clear();
+                    threadLauncher.waitAllLaunched();
+                    threadLauncher.clear();
                 }
             }
         } catch (Exception e) {
