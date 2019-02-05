@@ -1,5 +1,7 @@
 package ru.inno.lec05HomeWork.Occurences;
 
+import ru.inno.lec05HomeWork.Occurences.SentencesWriter.SentencesWriter;
+
 import java.util.List;
 
 /**

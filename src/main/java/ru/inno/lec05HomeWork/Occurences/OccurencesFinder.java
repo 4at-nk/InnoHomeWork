@@ -47,6 +47,8 @@
 
 package ru.inno.lec05HomeWork.Occurences;
 
+import ru.inno.lec05HomeWork.Occurences.SentencesWriter.SentencesWriter;
+
 import java.io.IOException;
 
 /**
@@ -56,7 +58,7 @@ import java.io.IOException;
  * @author FOAT
  * @version 1.0  05.02.2019
  */
-public class OccurencesFinder {
+public class OccurencesFinder implements AutoCloseable {
     /*
      * запускает для каждого файла свой поток обработки
      */
@@ -68,7 +70,20 @@ public class OccurencesFinder {
     /**
      * объект для запуска новых потоков
      */
-    private static ThreadLauncher threadLauncher = new ThreadLauncher();
+    private ThreadLauncher threadLauncher = new ThreadLauncher();
+    /**
+     * объект для записи результата
+     */
+    private SentencesWriter sentencesWriter;
+
+    /**
+     * конструктор
+     *
+     * @param sentencesWriter объект для записи результата
+     */
+    public OccurencesFinder(SentencesWriter sentencesWriter) {
+        this.sentencesWriter = sentencesWriter;
+    }
 
     /**
      * Находит предложения, в которых встречаются искомые слова и
@@ -79,11 +94,9 @@ public class OccurencesFinder {
      * @param res     полное имя файла, куда нужно записать результат
      * @throws IOException при проблемах с открытием файлов и записью в файлы
      */
-    public static void getOccurences(String[] sources, String[] words, String res) throws IOException, InterruptedException {
-        //открываем файл для записи результата
-        try (SentencesWriter sentencesWriter = new SentencesWriter(res)) {
-            oldGoodMethod(sources, words, sentencesWriter);
-        }
+    public void getOccurences(String[] sources, String[] words, String res) throws InterruptedException, IOException {
+        sentencesWriter.init(res);
+        oldGoodMethod(sources, words);
     }
 
     /**
@@ -91,19 +104,17 @@ public class OccurencesFinder {
      *
      * @param tLauncher мок-объект
      */
-    static void setThreadLauncher(ThreadLauncher tLauncher) {
+    void setThreadLauncher(ThreadLauncher tLauncher) {
         threadLauncher = tLauncher;
     }
 
     /**
      * Метод с ручным созданием потоков выполнения
      *
-     * @param sources         список файлов, которые нужно проверить
-     * @param words           список искомых слов
-     * @param sentencesWriter объект для записи предложений в файл
+     * @param sources список файлов, которые нужно проверить
+     * @param words   список искомых слов
      */
-    private static void oldGoodMethod(String[] sources, String[] words,
-                                      SentencesWriter sentencesWriter) throws InterruptedException {
+    private void oldGoodMethod(String[] sources, String[] words) throws InterruptedException {
         threadLauncher.clear();
         /*
         для каждого файла запускаем поток поиска слов
@@ -121,6 +132,13 @@ public class OccurencesFinder {
 
             threadLauncher.waitAllLaunched();
             threadLauncher.clear();
+        }
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (sentencesWriter != null) {
+            sentencesWriter.close();
         }
     }
 }

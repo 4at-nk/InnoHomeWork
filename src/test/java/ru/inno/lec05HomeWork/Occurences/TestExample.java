@@ -3,6 +3,10 @@ package ru.inno.lec05HomeWork.Occurences;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * класс содержащий тестовый набор предложений
+ * и правильный результат
+ */
 class TestExample {
     private static final String WORD_TO_FIND = "конь";
     private static final List<String> SENTENCES_LIST =

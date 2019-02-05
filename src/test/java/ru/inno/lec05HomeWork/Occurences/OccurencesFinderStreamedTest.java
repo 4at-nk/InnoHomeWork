@@ -3,22 +3,20 @@ package ru.inno.lec05HomeWork.Occurences;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.inno.lec05HomeWork.Occurences.SentencesWriter.StringListSentencesWriter;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 class OccurencesFinderStreamedTest {
 
-    private File RES_FILE;
+    private StringListSentencesWriter stringListSentencesWriter =
+            new StringListSentencesWriter();
     private String[] WORDS = {TestExample.getWordToFind()};
     private String[] SOURCES = new String[1];
 
     @BeforeEach
     void setUp() throws IOException {
-        RES_FILE = File.createTempFile("temp", ".txt");
-        RES_FILE.deleteOnExit();
-
         File sourceFile = File.createTempFile("temp", ".txt");
         sourceFile.deleteOnExit();
         SOURCES[0] = sourceFile.getAbsolutePath();
@@ -31,26 +29,21 @@ class OccurencesFinderStreamedTest {
     }
 
     @Test
-    void getOccurences() throws IOException {
-        OccurencesFinderStreamed
-                .getOccurences(SOURCES, WORDS, RES_FILE.getAbsolutePath());
+    void getOccurences() throws Exception {
+        try (OccurencesFinderStreamed occurencesFinderStreamed =
+                     new OccurencesFinderStreamed(stringListSentencesWriter)) {
+            occurencesFinderStreamed.getOccurences(SOURCES, WORDS, null);
 
-        List<String> resList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(
-                new FileReader(RES_FILE.getAbsolutePath()))) {
-            String s;
-            while ((s = reader.readLine()) != null) {
-                resList.add(s);
+            List<String> resList = stringListSentencesWriter.getStringList();
+
+            Assertions.assertEquals(TestExample.getGoodSentencesList().size(),
+                    resList.size(),
+                    "Количество корректных предложений != количество найденных");
+
+            for (int i = 0; i < TestExample.getGoodSentencesList().size(); ++i) {
+                Assertions.assertEquals(TestExample.getGoodSentencesList().get(i),
+                        resList.get(i));
             }
-        }
-
-        Assertions.assertEquals(TestExample.getGoodSentencesList().size(),
-                resList.size(),
-                "Количество корректных предложений != количество найденных");
-
-        for (int i = 0; i < TestExample.getGoodSentencesList().size(); ++i) {
-            Assertions.assertEquals(TestExample.getGoodSentencesList().get(i),
-                    resList.get(i));
         }
     }
 }

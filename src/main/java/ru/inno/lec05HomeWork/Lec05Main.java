@@ -8,7 +8,7 @@
 package ru.inno.lec05HomeWork;
 
 import ru.inno.lec05HomeWork.Occurences.OccurencesFinder;
-import ru.inno.lec05HomeWork.Occurences.OccurencesFinderStreamed;
+import ru.inno.lec05HomeWork.Occurences.SentencesWriter.FileSentencesWriter;
 
 /**
  * Класс демонстрирующий работу метода getOccurences() класса OccurencesFinder
@@ -22,7 +22,13 @@ public class Lec05Main {
         String[] words = {"есть", "шесть", "жизнь"};
         String[] files = {".\\tmp\\hw5\\example"};
 
-        OccurencesFinder.getOccurences(files, words, ".\\tmp\\hw5\\res\\res");
-        //OccurencesFinderStreamed.getOccurences(files, words, ".\\tmp\\hw5\\res\\res");
+        try (OccurencesFinder finder = new OccurencesFinder(new FileSentencesWriter())) {
+            finder.getOccurences(files, words, ".\\tmp\\hw5\\res\\res");
+        }
+
+        /*try (OccurencesFinderStreamed finderStreamed =
+                new OccurencesFinderStreamed(new FileSentencesWriter())) {
+            finderStreamed.getOccurences(files, words, ".\\tmp\\hw5\\res\\res");
+        }*/
     }
 }

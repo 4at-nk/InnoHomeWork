@@ -3,6 +3,7 @@ package ru.inno.lec05HomeWork.Occurences;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import ru.inno.lec05HomeWork.Occurences.SentencesWriter.SentencesWriter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -42,13 +43,13 @@ class FileReadThreadTest {
         fileReadThread.start();
         fileReadThread.join();
 
+        // проверяем, что запустилось столько потоков сколько слов
         Mockito.verify(threadLauncher, Mockito.times(WORDS.length))
                 .launch(Mockito.any(WordFindThread.class));
     }
 
     @Test
     void run0WordsTest() throws InterruptedException {
-        //String[] nullCountArr = new String[0];
         ThreadLauncher threadLauncher = Mockito.mock(ThreadLauncher.class);
         FileReadThread fileReadThread = new FileReadThread(FILE.getAbsolutePath(),
                 new String[0], SENTENCES_WRITER);
@@ -57,6 +58,7 @@ class FileReadThreadTest {
         fileReadThread.start();
         fileReadThread.join();
 
+        // проверяем, что запустилось столько потоков сколько слов, то есть 0
         Mockito.verify(threadLauncher, Mockito.times(0))
                 .launch(Mockito.any(WordFindThread.class));
     }

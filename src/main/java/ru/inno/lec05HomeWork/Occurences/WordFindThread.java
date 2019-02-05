@@ -1,5 +1,7 @@
 package ru.inno.lec05HomeWork.Occurences;
 
+import ru.inno.lec05HomeWork.Occurences.SentencesWriter.SentencesWriter;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +23,7 @@ class WordFindThread extends Thread {
      */
     private final String word;
     /**
-     * объект для записи предложений в файл
+     * объект для записи предложений
      */
     private final SentencesWriter sentencesWriter;
 
@@ -30,7 +32,7 @@ class WordFindThread extends Thread {
      *
      * @param sentences       список предложений, которые нужно проверить
      * @param word            слово, которое нужно найти
-     * @param sentencesWriter объект для записи предложений в файл
+     * @param sentencesWriter объект для записи предложений
      */
     WordFindThread(List<String> sentences, String word, SentencesWriter sentencesWriter) {
         this.sentences = sentences;
